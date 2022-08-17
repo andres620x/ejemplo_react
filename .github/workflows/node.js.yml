@@ -38,5 +38,5 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "example-reacta"
+          heroku_app_name: "shielded-mountain-70706"
           heroku_email: "jorge-620@hotmail.com"
