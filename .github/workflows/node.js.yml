@@ -42,7 +42,8 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           
-            custom-deploy:
+          
+  custom-deploy:
     # The `needs` is added to bypass:
     # "Your account has reached its concurrent builds limit"
     needs: heroku-deploy
