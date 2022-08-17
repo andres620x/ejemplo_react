@@ -30,23 +30,22 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-  deploy-test-1:
-    runs-on: ubuntu-latest
+  deploy: 
     needs: build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm run setup tests/test-3/data.json
-      - run: |
-          git config --global user.email "jorge-620@hotmail.com"
-          git config --global user.name "jorge"
-          git add -A
-          git commit -m "Added data.json"
-      - uses: akhileshns/heroku-deploy@master
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "ejemploreact"
-          heroku_email: "jorge-620@hotmail.com"
-          usedocker: true
-          healthcheck: "https://ejemploreact.herokuapp.com/"
+      - name: Login to Heroku Container registry
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login 
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
 
           
